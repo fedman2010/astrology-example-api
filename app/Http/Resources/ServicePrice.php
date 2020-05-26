@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Astrologer extends JsonResource
+class ServicePrice extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,9 @@ class Astrologer extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'bio' => $this->bio,
-            'services' => ServicePrice::collection($this->services)
+            'name' => $this->name,
+            'price' => $this->pivot->price,
+            'formattedPrice' => "{$this->pivot->price}\$"
         ];
     }
 }

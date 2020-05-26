@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResources([
+    'astrologers' => 'AstrologerController',
+    'astrologers.services' => 'AstrologerServiceController',
+    'services' => 'ServiceController',
+]);
+
+Route::post('orders/webhook', 'OrderController@webhook');
+Route::apiResource('orders', 'OrderController')->only(['index', 'store']);
