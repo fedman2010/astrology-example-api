@@ -11,5 +11,5 @@ interface PaymentInterface
 {
     public function create(Order $order);
 
-    public function markOrderPaid(Request $request);
+    public function markOrderPaid(array $data) : Order;
 }
