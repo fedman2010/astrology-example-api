@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AstrologerService;
 use App\Http\Resources\Astrologer;
+use App\Jobs\GoogleSheets;
 use App\Order;
 use App\Services\Payment\Payment;
 use App\Services\Payment\PaymentException;
@@ -80,6 +81,13 @@ class OrderController extends Controller
         return $order;
     }
 
+    /**
+     * Handles request from Payment Services, such as Stripe or Mollie.
+     * Dispatches a job for writing Order data to Google Sheets.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function webhook(Request $request)
     {
         $data = $request->all();
@@ -87,7 +95,7 @@ class OrderController extends Controller
         $order = $this->payments->markOrderPaid($data);
 
         if ($order->paid) {
-
+            GoogleSheets::dispatch($order);
         }
 
         return response('Request handled', 200);

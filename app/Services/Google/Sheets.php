@@ -22,8 +22,8 @@ class Sheets
         $this->sheet->append([[
             $order->email,
             $order->name,
-            $order->astrologer->fullName(),
-            $order->service->name,
+            $order->astrologer()->withTrashed()->first()->fullName(),
+            $order->service()->withTrashed()->first()->name,
             $order->formattedPrice()
         ]]);
     }
