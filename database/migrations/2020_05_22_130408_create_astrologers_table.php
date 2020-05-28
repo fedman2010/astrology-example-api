@@ -20,6 +20,7 @@ class CreateAstrologersTable extends Migration
             $table->string('email');
             $table->text('bio');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
